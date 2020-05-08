@@ -30,9 +30,4 @@ public class AgendaService {
 	public int nombreContactes() {
 		return bbdd.size();
 	}
-	
-	public String telefon(String id) {
-		Persona usuari = recupera(id);
-		return usuari.getTelefon();
-	}
 }

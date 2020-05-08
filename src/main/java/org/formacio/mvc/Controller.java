@@ -1,5 +1,6 @@
 package org.formacio.mvc;
 
+
 import org.formacio.repositori.AgendaService;
 import org.formacio.repositori.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,27 @@ public class Controller {
 	@RequestMapping(path = "/telefon", method = RequestMethod.GET)
 	@ResponseBody
 	public String getPhone(@RequestParam String id) {
-		return agenda.telefon(id);
+		return agenda.recupera(id).getTelefon();
 	}
 	
 	@RequestMapping(path = "/contacte/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public Persona getUser(@PathVariable("id") String id) {
-		return agenda.recupera(id);
+		if (agenda.recupera(id) == null) {
+			throw new OperationException();
+		} else {
+			return agenda.recupera(id);
+		}
+		
+	}
+	
+	@RequestMapping(path = "/afegir", method = RequestMethod.POST)
+	@ResponseBody
+	public String addUser(@RequestParam String id, 
+			@RequestParam String nom, 
+			@RequestParam String telefon) {
+		agenda.inserta(id, nom, telefon);
+		return "ok";
 	}
 
 }
